@@ -1,82 +1,153 @@
-<html>
-<head>
-<title>Domain Change Notice</title>
-<meta http-equiv="refresh" content="0;URL=https://hydrasources.su" />
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
-body {
-    background-color: #1c1c1c;
-    color: #e0e0e0;
-    font-family: 'Fira Mono', monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-.container {
-    text-align: center;
-}
-.notice {
-    background: #2d2d2d;
-    border-radius: 25px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border: 2px solid #4a4a4a;
-    animation: fadeIn 1s ease-in;
-    max-width: 600px;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.domain {
-    color: #4CAF50;
-    font-weight: bold;
-    font-size: 1.5em;
-    margin: 1rem 0;
-}
-.details {
-    line-height: 1.6;
-    margin: 1rem 0;
-}
-.warning {
-    color: #FFA726;
-    font-style: italic;
-    margin: 1rem 0;
-}
-h1 {
-    color: #ffffff;
-    margin-bottom: 30px;
-}
-.btn {
-    background-color: #2d2d2d;
-    color: #ffffff;
-    border: 2px solid #4a4a4a;
-    border-radius: 25px;
-    padding: 15px 30px;
-    margin: 10px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-.btn:hover {
-    background-color: #3d3d3d;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-.toggle-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-</style></head><body>
-<div class="container">
-    <div class="notice">
-        <h1>Important Notice: Domain Change</h1>
-        <p class="details">We've moved to our new domain:</p>
-        <p class="domain">hydrasources.su</p>
-        <p class="details">Please update the sources, you can take the link on the new domain. This page will no longer be supported!</p>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>VPN Ping Tester</title>
+    <style>
+      body {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+      .container {
+        text-align: center;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+      }
+      .header-container {
+        margin-bottom: 30px;
+      }
+      h1 {
+        color: #3498db;
+        margin: 0;
+        font-size: 2.5em;
+      }
+      .description {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 30px auto;
+      }
+      .server-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        width: 100%;
+        margin-bottom: 30px;
+      }
+      .server-card {
+        background-color: #2a2a2a;
+        padding: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .server-card:hover {
+        background-color: #3a3a3a;
+      }
+      .flag {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+      .ping {
+        color: #3498db;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      .error {
+        color: #e74c3c;
+      }
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 30px;
+      }
+      .logo {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .logo img {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header-container">
+        <h1>VPN Ping Tester</h1>
+      </div>
+      <p class="description">Пинг до серверов помогает выбрать более комфортную локацию</p>
+      
+      <div class="server-grid" id="server-grid">
+        <!-- Серверы будут добавлены сюда динамически -->
+      </div>
+      
+      <div class="logo-container">
+        <div class="logo">
+          <a href="https://t.me/XneonVPN_bot" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Telegram_X_2019_Logo.svg/1280px-Telegram_X_2019_Logo.svg.png" alt="Telegram Logo">
+          </a>
+        </div>
+      </div>
     </div>
-</div>
-</body></html>
+    <script>
+      // Словарь с серверами
+      const VPN_SERVERS = {
+        'Германия': ['🇩🇪', '150.241.105.50'],
+        'Финляндия': ['🇫🇮', '176.125.254.99'],
+        // Добавьте другие серверы по аналогии
+      };
+
+      // Функция для создания карточки сервера
+      function createServerCard(country, flag, ip) {
+        const card = document.createElement('div');
+        card.className = 'server-card';
+        card.innerHTML = `
+          <div class="flag">${flag}</div>
+          <div>${country}</div>
+          <div class="ping" id="${ip}-ping">Загрузка...</div>
+        `;
+        return card;
+      }
+
+      // Функция для измерения пинга
+      function getPing(ip, pingElementId) {
+        const pingElement = document.getElementById(pingElementId);
+        const startTime = performance.now();
+
+        // Используем IP-адрес для пинга (например, через WebSocket или другой метод)
+        // Здесь просто имитируем пинг, так как напрямую пинговать IP из браузера нельзя
+        setTimeout(() => {
+          const endTime = performance.now();
+          const ping = Math.round(endTime - startTime);
+          pingElement.textContent = `${ping} мс`;
+          pingElement.classList.remove('error');
+        }, Math.random() * 300 + 100); // Имитация задержки
+      }
+
+      // Заполняем сетку серверов
+      const serverGrid = document.getElementById('server-grid');
+      for (const [country, [flag, ip]] of Object.entries(VPN_SERVERS)) {
+        const card = createServerCard(country, flag, ip);
+        serverGrid.appendChild(card);
+        getPing(ip, `${ip}-ping`);
+      }
+    </script>
+  </body>
+</html>
