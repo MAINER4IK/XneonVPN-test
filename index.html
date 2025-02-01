@@ -4,7 +4,12 @@
     <meta charset="utf-8">
     <title>VPN Ping Tester</title>
     <style>
+      /* Запрет выделения текста и элементов на всей странице */
       body {
+        -webkit-user-select: none; /* Для Safari */
+        -moz-user-select: none; /* Для Firefox */
+        -ms-user-select: none; /* Для IE/Edge */
+        user-select: none; /* Стандартное свойство */
         background-color: #1a1a1a;
         color: #ffffff;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -65,6 +70,9 @@
         font-weight: bold;
         margin-top: 10px;
       }
+      .green-ping {
+        color: #2ecc71; /* Зеленый цвет для пинга */
+      }
       .error {
         color: #e74c3c;
       }
@@ -90,7 +98,7 @@
   <body>
     <div class="container">
       <div class="header-container">
-        <h1>VPN Ping Tester</h1>
+        <h1>XneonVPN Ping Tester</h1>
       </div>
       <p class="description">Пинг до серверов помогает выбрать более комфортную локацию</p>
       
@@ -110,7 +118,7 @@
       // Словарь с серверами
       const VPN_SERVERS = {
         'Германия': ['🇩🇪', '150.241.105.50'],
-        'Финляндия': ['🇫🇮', '176.125.254.99'],
+        'Нидерланды': ['🇳🇱', '198.51.100.1'],
         // Добавьте другие серверы по аналогии
       };
 
@@ -123,21 +131,29 @@
           <div>${country}</div>
           <div class="ping" id="${ip}-ping">Загрузка...</div>
         `;
+
+        // Добавляем обработчик клика для обновления пинга
+        card.addEventListener('click', () => {
+          const pingElement = document.getElementById(`${ip}-ping`);
+          pingElement.textContent = 'Обновление...';
+          getPing(ip, `${ip}-ping`);
+        });
+
         return card;
       }
 
-      // Функция для измерения пинга
+      // Функция для измерения пинга (имитация)
       function getPing(ip, pingElementId) {
         const pingElement = document.getElementById(pingElementId);
         const startTime = performance.now();
 
-        // Используем IP-адрес для пинга (например, через WebSocket или другой метод)
-        // Здесь просто имитируем пинг, так как напрямую пинговать IP из браузера нельзя
+        // Имитация пинга с использованием setTimeout
         setTimeout(() => {
           const endTime = performance.now();
           const ping = Math.round(endTime - startTime);
-          pingElement.textContent = `${ping} мс`;
+          pingElement.textContent = `${ping} ms`;
           pingElement.classList.remove('error');
+          pingElement.classList.add('green-ping'); // Добавляем класс для зеленого цвета
         }, Math.random() * 300 + 100); // Имитация задержки
       }
 
@@ -146,7 +162,7 @@
       for (const [country, [flag, ip]] of Object.entries(VPN_SERVERS)) {
         const card = createServerCard(country, flag, ip);
         serverGrid.appendChild(card);
-        getPing(ip, `${ip}-ping`);
+        getPing(ip, `${ip}-ping`); // Первоначальное измерение пинга
       }
     </script>
   </body>
